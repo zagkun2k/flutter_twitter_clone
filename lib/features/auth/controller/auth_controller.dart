@@ -17,7 +17,7 @@ final authControllerProvider =
 
 final currentUserDetailProvider = FutureProvider((ref) {
   final currentUserId = ref.watch(currentUserAccountProvider).value!.$id;
-  print(currentUserId);
+  // print(currentUserId);
   final userDetails = ref.watch(userDetailsProvider(currentUserId));
   return userDetails.value;
 });
@@ -105,5 +105,19 @@ class AuthController extends StateNotifier<bool> {
     final document = await _userAPI.getUserData(uid);
     final updatedUser = UserModel.fromMap(document.data);
     return updatedUser;
+  }
+
+  void logOut(BuildContext context) async {
+    final res = await _authAPI.logOut();
+    res.fold(
+      (l) => showSnackBar(context, l.message),
+      (r) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          LoginView.route(),
+          (route) => false,
+        );
+      },
+    );
   }
 }

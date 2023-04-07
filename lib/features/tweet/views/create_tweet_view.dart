@@ -41,6 +41,8 @@ class _CreateTweetScreenState extends ConsumerState<CreateTweetScreen> {
           images: images,
           text: tweetTextController.text,
           context: context,
+          repliedTo: '',
+          repliedToUserId: '',
         );
     Navigator.pop(context); // to HomeView
   }
@@ -66,27 +68,35 @@ class _CreateTweetScreenState extends ConsumerState<CreateTweetScreen> {
           ),
         ),
         actions: [
-          RoundedSmallButton(
-            onTap: shareTweet,
-            label: 'Tweet',
-            backgroundColor: Pallete.blueColor,
-            textColor: Pallete.whiteColor,
+          Container(
+            padding: const EdgeInsets.only(top: 15, right: 15),
+            child: RoundedSmallButton(
+              onTap: shareTweet,
+              label: 'Tweet',
+              backgroundColor: Pallete.blueColor,
+              textColor: Pallete.whiteColor,
+            ),
           ),
         ],
       ),
       body: isLoading || currentUser == null
-      // body: currentUser == null
+          // body: currentUser == null
           ? const Loader()
           : SafeArea(
               // body: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(currentUser.profilePic),
-                          radius: 30,
+                        Container(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(currentUser.profilePic),
+                            radius: 30,
+                          ),
                         ),
                         const SizedBox(width: 15),
                         Expanded(
@@ -99,7 +109,7 @@ class _CreateTweetScreenState extends ConsumerState<CreateTweetScreen> {
                               hintText: "What's happening?",
                               hintStyle: TextStyle(
                                 color: Pallete.greyColor,
-                                fontSize: 22,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
                               border: InputBorder.none,
@@ -109,6 +119,7 @@ class _CreateTweetScreenState extends ConsumerState<CreateTweetScreen> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 10),
                     if (images.isNotEmpty)
                       CarouselSlider(
                         items: images.map(

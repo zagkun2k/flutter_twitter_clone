@@ -38,7 +38,8 @@ class _CarouselImageState extends State<CarouselImage> {
                 },
               ).toList(),
               options: CarouselOptions(
-                height: 350,
+                // height: 350,
+                height: 260,
                 viewportFraction: 1,
                 enableInfiniteScroll: false,
                 onPageChanged: (index, reason) {
@@ -60,6 +61,7 @@ class _CarouselImageState extends State<CarouselImage> {
                   ),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
+                    // borderRadius: const BorderRadius.all(Radius.circular(0.3)),
                     color: Colors.white.withOpacity(
                       _current == e.key ? 0.9 : 0.4,
                     ),
